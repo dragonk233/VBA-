@@ -1,0 +1,8 @@
+Option Explicit
+Function IsWbOpen(strName As String) As Boolean
+    Dim w As Workbook
+    For Each w In Application.Workbooks
+        If w.Name = strName Then IsWbOpen = True: Exit Function
+    Next
+    IsWbOpen = False
+End Function
