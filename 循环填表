@@ -26,6 +26,16 @@ Sub 循环填表()
     var7so = "h"
     var8so = "i"
     
+    IDto = "a"
+    var1to = "b"
+    var2to = "c"
+    var3to = "d"
+    var4to = "e"
+    var5to = "f"
+    var6to = "g"
+    var7to = "h"
+    var8to = "i"
+    
     If IsWbOpen(twb) = False Then
         Workbooks.Open (twb)
     End If
