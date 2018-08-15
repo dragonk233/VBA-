@@ -1,10 +1,9 @@
-Option Explicit
-
 Sub 循环填表()
     Application.ScreenUpdating = False
     
     Dim i As Double '定义循环增量
-    Dim twb As String '定义目标工作簿名称
+    Dim twb As String '定义目标工作簿地址
+    Dim twbn As String '定义目标工作簿名称
     Dim twbs As String '定义目标工作表名称
     Dim swbs As String '定义源工作表名称
     Dim ID, var1, var2, var3, var4, var5, var6, var7, var8 As Variant '定义需要用到的变量
@@ -13,35 +12,35 @@ Sub 循环填表()
     Dim IDs As Range '定义ID在目标表所在的位置
 '变量赋值
     i = 3
-    twb = "D:\TowerDefence\program\trunk\config\xmls"
+    twb = "D:\TowerDefence\program\trunk\config\xmls\"
+    twbn = "monster_new.xml"
     twbs = "通用"
-    swbs = "通用"
-    IDso = "a"
-    var1so = "b"
-    var2so = "c"
-    var3so = "d"
-    var4so = "e"
-    var5so = "f"
-    var6so = "g"
-    var7so = "h"
-    var8so = "i"
+    swbs = "关卡"
+    IDso = "b"
+    var1so = "d"   '关卡人数
+    var2so = "h"   '生命值
+    var3so = "i"   '蠢
+    var4so = "i"   '萌
+    var5so = "i"   '贱
+    var6so = "i"   '帅
+    var7so = "j"   '轮次
+
+    IDto = "A:A"
+    var1to = 3   '关卡人数
+    var2to = 4   '生命值
+    var3to = 5   '蠢
+    var4to = 6   '萌
+    var5to = 7   '贱
+    var6to = 8   '帅
+    var7to = 10   '轮次
+
     
-    IDto = "a"
-    var1to = "b"
-    var2to = "c"
-    var3to = "d"
-    var4to = "e"
-    var5to = "f"
-    var6to = "g"
-    var7to = "h"
-    var8to = "i"
-    
-    If IsWbOpen(twb) = False Then
-        Workbooks.Open (twb)
+    If IsWbOpen(twb & twbn) = False Then
+        Workbooks.Open (twb & twbn)
     End If
     Sheets(twbs).Select
     
-    With Workbooks(twb).Sheets(twbs)
+    With Workbooks(twbn).Sheets(twbs)
         Do While Len(Range(IDso & i)) <> 0
             ThisWorkbook.Activate
             Sheets(swbs).Select
@@ -53,24 +52,25 @@ Sub 循环填表()
             var5 = Cells(i, var5so).Value
             var6 = Cells(i, var6so).Value
             var7 = Cells(i, var7so).Value
-            var8 = Cells(i, var8so).Value
+            'var8 = Cells(i, var8so).Value
             
             Set IDs = .Range(IDto).Find(ID)
             
-            IDs.Offset(0, var1to).Value
-            IDs.Offset(0, var2to).Value
-            IDs.Offset(0, var3to).Value
-            IDs.Offset(0, var4to).Value
-            IDs.Offset(0, var5to).Value
-            IDs.Offset(0, var6to).Value
-            IDs.Offset(0, var7to).Value
-            IDs.Offset(0, var8to).Value
+            IDs.Offset(0, var1to).Value = var1
+            IDs.Offset(0, var2to).Value = var2
+            IDs.Offset(0, var3to).Value = var3
+            IDs.Offset(0, var4to).Value = var4
+            IDs.Offset(0, var5to).Value = var5
+            IDs.Offset(0, var6to).Value = var6
+            IDs.Offset(0, var7to).Value = var7
+            'IDs.Offset(0, var8to).Value
             
             i = i + 1
         Loop
     End With
 
-    Workbooks(twb).Close True
+    Workbooks(twbn).Close True
     Application.ScreenUpdating = True
+    MsgBox ("导出成功")
     
 End Sub
