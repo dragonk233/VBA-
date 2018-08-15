@@ -1,0 +1,66 @@
+Option Explicit
+
+Sub 循环填表()
+    Application.ScreenUpdating = False
+    
+    Dim i As Double '定义循环增量
+    Dim twb As String '定义目标工作簿名称
+    Dim twbs As String '定义目标工作表名称
+    Dim swbs As String '定义源工作表名称
+    Dim ID, var1, var2, var3, var4, var5, var6, var7, var8 As Variant '定义需要用到的变量
+    Dim IDso, var1so, var2so, var3so, var4so, var5so, var6so, var7so, var8so As Variant '定义变量的源表位置
+    Dim IDto, var1to, var2to, var3to, var4to, var5to, var6to, var7to, var8to As Variant '定义变量的目标表偏移量
+    Dim IDs As Range '定义ID在目标表所在的位置
+'变量赋值
+    i = 3
+    twb = "D:\TowerDefence\program\trunk\config\xmls"
+    twbs = "通用"
+    swbs = "通用"
+    IDso = "a"
+    var1so = "b"
+    var2so = "c"
+    var3so = "d"
+    var4so = "e"
+    var5so = "f"
+    var6so = "g"
+    var7so = "h"
+    var8so = "i"
+    
+    If IsWbOpen(twb) = False Then
+        Workbooks.Open (twb)
+    End If
+    Sheets(twbs).Select
+    
+    With Workbooks(twb).Sheets(twbs)
+        Do While Len(Range(IDso & i)) <> 0
+            ThisWorkbook.Activate
+            Sheets(swbs).Select
+            ID = Cells(i, IDso).Value
+            var1 = Cells(i, var1so).Value
+            var2 = Cells(i, var2so).Value
+            var3 = Cells(i, var3so).Value
+            var4 = Cells(i, var4so).Value
+            var5 = Cells(i, var5so).Value
+            var6 = Cells(i, var6so).Value
+            var7 = Cells(i, var7so).Value
+            var8 = Cells(i, var8so).Value
+            
+            Set IDs = .Range(IDto).Find(ID)
+            
+            IDs.Offset(0, var1to).Value
+            IDs.Offset(0, var2to).Value
+            IDs.Offset(0, var3to).Value
+            IDs.Offset(0, var4to).Value
+            IDs.Offset(0, var5to).Value
+            IDs.Offset(0, var6to).Value
+            IDs.Offset(0, var7to).Value
+            IDs.Offset(0, var8to).Value
+            
+            i = i + 1
+        Loop
+    End With
+
+    Workbooks(twb).Close True
+    Application.ScreenUpdating = True
+    
+End Sub
