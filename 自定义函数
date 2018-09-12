@@ -1,8 +1,45 @@
 Option Explicit
+'判断工作簿是否打开
 Function IsWbOpen(strName As String) As Boolean
     Dim w As Workbook
     For Each w In Application.Workbooks
         If w.Name = strName Then IsWbOpen = True: Exit Function
     Next
     IsWbOpen = False
+End Function
+'提取批注内容
+Function 批注(rg As Range)
+Application.Volatile True '定义该函数为易失函数
+批注 = rg.Comment.Text '提取批注内容
+End Function
+
+’重复函数，允许插入标点
+Function repeat(a, b, c)
+Dim aa$, i%
+aa = a
+If b = 1 Then
+    repeat = a
+Else
+For i = 0 To b - 2 Step 1
+    repeat = a & c & aa
+    a = a & c & aa
+Next
+End If
+End Function
+
+’自定义高级查询函数
+Function LOOK(查找值 As String, 区域 As Range, Optional 列 As Integer = 2, Optional 索引号 As Integer = 1) As String
+    Application.Volatile
+    Dim i As Long, cell As Range, Str As String
+    With 区域(1).Resize(区域.Rows.Count, 1)
+    If .Cells(1) = 查找值 Then Set cell = .Cells(1) Else Set cell = .Find(查找值, LookIn:=xlValues)
+     If Not cell Is Nothing Then
+        Str = cell.Address
+        Do
+            i = i + 1
+            If i = 索引号 Then LOOK = cell.Offset(0, 列 - 1): Exit Function
+            Set cell = 区域.Find(查找值, cell)
+        Loop While Not cell Is Nothing And cell.Address <> Str
+    End If
+End With
 End Function
